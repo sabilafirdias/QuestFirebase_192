@@ -21,7 +21,6 @@ RepositorySiswa): ViewModel() {
     private val idSiswa: Long =
         savedStateHandle.get<String>(DestinasiDetail.itemIdArg)?.toLong()
             ?: error("idSiswa tidak ditemukan di SavedStateHandle")
-
     init {
         viewModelScope.launch {
             uiStateSiswa = repositorySiswa.getSatuSiswa(idSiswa)!!
@@ -31,10 +30,13 @@ RepositorySiswa): ViewModel() {
 
     fun updateUiState(detailSiswa: DetailSiswa) {
         uiStateSiswa =
-            UIStateSiswa(
-                detailSiswa = detailSiswa, isEntryValid = validasiInput
-                    (detailSiswa)
-            )
+            UIStateSiswa(detailSiswa = detailSiswa, isEntryValid = validasiInput
+                            (detailSiswa))
+            }
+    private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa ): Boolean {
+        return with(uiState) {
+            nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
+        }
     }
 
 }
