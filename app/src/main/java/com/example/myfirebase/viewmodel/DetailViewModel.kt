@@ -13,5 +13,6 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed interface StatusUIDetail {
+    data class Success(val satusiswa: Siswa?) : StatusUIDetail
 }
 
